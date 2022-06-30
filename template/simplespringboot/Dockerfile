@@ -4,7 +4,7 @@ FROM maven:3.6.3-openjdk-8 as builder
 WORKDIR /home/app
 
 # 将整个项目都复制到/home/app目录下
-COPY ../function /home/app/
+COPY . /home/app/
 
 # 进入pom.xml所在目录执行构建命令，指定m2/settings.xml文件作为配置文件，
 # 请在settings.xml中配置好私服，否则构建速度极慢
