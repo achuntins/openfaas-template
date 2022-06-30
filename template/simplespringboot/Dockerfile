@@ -4,14 +4,14 @@ FROM maven:3.6.3-openjdk-8 as builder
 WORKDIR /home/app
 
 # 将整个项目都复制到/home/app目录下
-COPY ../springboot /home/app/
+COPY ../function /home/app/
 
 # 进入pom.xml所在目录执行构建命令，指定m2/settings.xml文件作为配置文件，
 # 请在settings.xml中配置好私服，否则构建速度极慢
-RUN cd springboot && mvn clean package -U -DskipTests --settings ./m2/settings.xml
+RUN cd function && mvn clean package -U -DskipTests --settings ./m2/settings.xml
 
 # 前面用maven编译构建完毕后，这里将构建结果复制到指定位置用于提取文件
-RUN cp /home/app/springboot/target/*.jar ./application.jar
+RUN cp /home/app/function/target/*.jar ./application.jar
 # 通过工具spring-boot-jarmode-layertools从application.jar中提取拆分后的构建结果
 RUN java -Djarmode=layertools -jar application.jar extract
 
